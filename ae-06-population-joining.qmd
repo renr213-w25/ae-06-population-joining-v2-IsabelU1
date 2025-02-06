@@ -1,5 +1,6 @@
 ---
 title: "AE 06: Joining country populations with continents"
+author: "Isabel Ulrich "
 ---
 
 ## Goal
@@ -62,11 +63,11 @@ continents
 
     -   Which variable(s) will we use to join the `population` and `continents` data frames?
 
-    Add response here.
+    entity/ country variable
 
     -   We want to create a new data frame that keeps all rows and columns from `population` and brings in the corresponding information from `continents`. Which join function should we use?
 
-    Add response here.
+    left join: population on left, continents on right
 
 -   **Demo:** Join the two data frames and name assign the joined data frame to a new data frame `population_continents`.
 
