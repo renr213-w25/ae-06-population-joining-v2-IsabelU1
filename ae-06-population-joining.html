@@ -258,20 +258,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Demo:</strong> Create a new data frame called <code>population_summary</code> that contains a row for each continent and a column for the total population for that continent, in descending order of population. Note that the function for calculating totals in R is <code>sum()</code>.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>population_summary <span class="ot">&lt;-</span> population_continents <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tot_pop =</span> <span class="fu">sum</span>(population)) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tot_pop))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>population_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  continent      tot_pop
+  &lt;chr&gt;            &lt;dbl&gt;
+1 Asia          4685922.
+2 Africa        1424831.
+3 Europe         740607.
+4 North America  594415.
+5 South America  437233.
+6 Oceania         44752.</code></pre>
+</div>
 </div>
 <ul>
 <li><strong>Your turn:</strong> Make a bar plot with total population on the y-axis and continent on the x-axis, where the height of each bar represents the total population in that continent.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(population_summary,<span class="fu">aes</span>(<span class="at">y =</span> tot_pop, <span class="at">x=</span>continent)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ae-06-population-joining_files/figure-html/population-summary-bar-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <ul>
 <li><strong>Your turn:</strong> Recreate the following plot, which is commonly referred to as a <strong>lollipop plot</strong>. Hint: Start with the points, then try adding the <code>segment</code>s, then add axis labels and <code>caption</code>, and finally, as a stretch goal, update the x scale (which will require a function we haven’t introduced in lectures or labs yet!).</li>
 </ul>
 <p><img src="https://sta199-s24.github.io/images/population-summary-lollipop.png" class="img-fluid"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><strong>Think out loud:</strong> What additional improvements would you like to make to this plot.</li>

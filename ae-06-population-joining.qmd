@@ -114,7 +114,11 @@ Add your response here.
 ```{r}
 #| label: population-continents-sum
 
-# add code here
+population_summary <- population_continents |>
+  group_by(continent) |>
+  summarize(tot_pop = sum(population)) |>
+  arrange(desc(tot_pop))
+population_summary
 ```
 
 -   **Your turn:** Make a bar plot with total population on the y-axis and continent on the x-axis, where the height of each bar represents the total population in that continent.
@@ -122,7 +126,8 @@ Add your response here.
 ```{r}
 #| label: population-summary-bar
 
-# add code here
+ggplot(population_summary,aes(y = tot_pop, x=continent)) +
+geom_col()
 ```
 
 -   **Your turn:** Recreate the following plot, which is commonly referred to as a **lollipop plot**. Hint: Start with the points, then try adding the `segment`s, then add axis labels and `caption`, and finally, as a stretch goal, update the x scale (which will require a function we haven't introduced in lectures or labs yet!).
