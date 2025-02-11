@@ -89,7 +89,7 @@ population_continents |>
 ```{r}
 #| label: data-clean
 
-population_continents |>
+population_continents <- population|>
   mutate(country = case_when(
     country == "Congo, Dem. Rep." ~"Democratic Republic of Congo", 
     country == "Congo, Rep." ~ "Congo",
@@ -97,10 +97,11 @@ population_continents |>
     country == "Korea, Dem. People's Rep." ~ "North Korea",
     country == "Korea, Rep." ~ "South Korea",
     country == "Kyrgyz Republic" ~ "Kyrgyzstan",
-    .default = country)) 
-
-  population_continents <- population |>
+    .default = country)) |>
   left_join(continents, by = join_by(country == entity)) 
+ 
+ population_continents |>
+   filter(is.na(continent))
 
 ```
 

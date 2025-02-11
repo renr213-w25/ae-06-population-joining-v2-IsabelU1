@@ -231,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Demo:</strong> All of these countries are actually in the <code>continents</code> data frame, but under different names. So, let’s clean that data first by updating the country names in the <code>population</code> data frame in a way they will match the <code>continents</code> data frame, and then joining them, using a <code>case_when()</code> statement in <code>mutate()</code>. At the end, check that all countries now have continent information.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>population_continents <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>population_continents <span class="ot">&lt;-</span> population<span class="sc">|&gt;</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">case_when</span>(</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    country <span class="sc">==</span> <span class="st">"Congo, Dem. Rep."</span> <span class="sc">~</span><span class="st">"Democratic Republic of Congo"</span>, </span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    country <span class="sc">==</span> <span class="st">"Congo, Rep."</span> <span class="sc">~</span> <span class="st">"Congo"</span>,</span>
@@ -239,25 +239,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    country <span class="sc">==</span> <span class="st">"Korea, Dem. People's Rep."</span> <span class="sc">~</span> <span class="st">"North Korea"</span>,</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    country <span class="sc">==</span> <span class="st">"Korea, Rep."</span> <span class="sc">~</span> <span class="st">"South Korea"</span>,</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    country <span class="sc">==</span> <span class="st">"Kyrgyz Republic"</span> <span class="sc">~</span> <span class="st">"Kyrgyzstan"</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> country)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.default =</span> country)) <span class="sc">|&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(continents, <span class="at">by =</span> <span class="fu">join_by</span>(country <span class="sc">==</span> entity)) </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a> population_continents <span class="sc">|&gt;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(<span class="fu">is.na</span>(continent))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 217 × 6
-   country             year.x population code  year.y continent    
-   &lt;chr&gt;                &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;        
- 1 Afghanistan           2022    41129.  AFG     2015 Asia         
- 2 Albania               2022     2778.  ALB     2015 Europe       
- 3 Algeria               2022    44903.  DZA     2015 Africa       
- 4 American Samoa        2022       44.3 ASM     2015 Oceania      
- 5 Andorra               2022       79.8 AND     2015 Europe       
- 6 Angola                2022    35589.  AGO     2015 Africa       
- 7 Antigua and Barbuda   2022       93.8 ATG     2015 North America
- 8 Argentina             2022    46235.  ARG     2015 South America
- 9 Armenia               2022     2780.  ARM     2015 Asia         
-10 Aruba                 2022      106.  ABW     2015 North America
-# ℹ 207 more rows</code></pre>
+<pre><code># A tibble: 0 × 6
+# ℹ 6 variables: country &lt;chr&gt;, year.x &lt;dbl&gt;, population &lt;dbl&gt;, code &lt;chr&gt;,
+#   year.y &lt;dbl&gt;, continent &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  population_continents <span class="ot">&lt;-</span> population <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(continents, <span class="at">by =</span> <span class="fu">join_by</span>(country <span class="sc">==</span> entity)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><strong>Think out loud:</strong> Which continent do you think has the highest population? Which do you think has the second highest? The lowest?</li>
@@ -267,20 +258,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Demo:</strong> Create a new data frame called <code>population_summary</code> that contains a row for each continent and a column for the total population for that continent, in descending order of population. Note that the function for calculating totals in R is <code>sum()</code>.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><strong>Your turn:</strong> Make a bar plot with total population on the y-axis and continent on the x-axis, where the height of each bar represents the total population in that continent.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><strong>Your turn:</strong> Recreate the following plot, which is commonly referred to as a <strong>lollipop plot</strong>. Hint: Start with the points, then try adding the <code>segment</code>s, then add axis labels and <code>caption</code>, and finally, as a stretch goal, update the x scale (which will require a function we haven’t introduced in lectures or labs yet!).</li>
 </ul>
 <p><img src="https://sta199-s24.github.io/images/population-summary-lollipop.png" class="img-fluid"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><strong>Think out loud:</strong> What additional improvements would you like to make to this plot.</li>
