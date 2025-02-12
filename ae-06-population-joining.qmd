@@ -1,5 +1,6 @@
 ---
 title: "AE 06: Joining country populations with continents"
+author: "Isabel Ulrich "
 ---
 
 ## Goal
@@ -61,19 +62,17 @@ continents
 -   **Think out loud:**
 
     -   Which variable(s) will we use to join the `population` and `continents` data frames?
-
-    Add response here.
-
+        -   The entity variable from contients data frame and country variable form population data frame.
     -   We want to create a new data frame that keeps all rows and columns from `population` and brings in the corresponding information from `continents`. Which join function should we use?
-
-    Add response here.
+        -   left join: population on left, continents on right
 
 -   **Demo:** Join the two data frames and name assign the joined data frame to a new data frame `population_continents`.
 
 ```{r}
 #| label: join-population-continents
-
-# add code here
+population_continents <- population |>
+  left_join(continents, by = join_by(country == entity))
+population_continents
 ```
 
 -   **Demo:** Take a look at the newly created `population_continent` data frame. There are some countries that were not in `continents`. First, identify which countries these are (they will have `NA` values for `continent`).
@@ -81,7 +80,8 @@ continents
 ```{r}
 #| label: data-inspect
 
-# add code here
+population_continents |> 
+  filter(is.na(continent))
 ```
 
 -   **Demo:** All of these countries are actually in the `continents` data frame, but under different names. So, let's clean that data first by updating the country names in the `population` data frame in a way they will match the `continents` data frame, and then joining them, using a `case_when()` statement in `mutate()`. At the end, check that all countries now have continent information.
@@ -89,7 +89,20 @@ continents
 ```{r}
 #| label: data-clean
 
-# add code here
+population_continents <- population|>
+  mutate(country = case_when(
+    country == "Congo, Dem. Rep." ~"Democratic Republic of Congo", 
+    country == "Congo, Rep." ~ "Congo",
+    country == "Hong Kong SAR, China" ~ "Hong Kong",
+    country == "Korea, Dem. People's Rep." ~ "North Korea",
+    country == "Korea, Rep." ~ "South Korea",
+    country == "Kyrgyz Republic" ~ "Kyrgyzstan",
+    .default = country)) |>
+  left_join(continents, by = join_by(country == entity)) 
+ 
+ population_continents |>
+   filter(is.na(continent))
+
 ```
 
 -   **Think out loud:** Which continent do you think has the highest population? Which do you think has the second highest? The lowest?
@@ -101,7 +114,11 @@ Add your response here.
 ```{r}
 #| label: population-continents-sum
 
-# add code here
+population_summary <- population_continents |>
+  group_by(continent) |>
+  summarize(tot_pop = sum(population)) |>
+  arrange(desc(tot_pop))
+population_summary
 ```
 
 -   **Your turn:** Make a bar plot with total population on the y-axis and continent on the x-axis, where the height of each bar represents the total population in that continent.
@@ -109,7 +126,8 @@ Add your response here.
 ```{r}
 #| label: population-summary-bar
 
-# add code here
+ggplot(population_summary,aes(y = tot_pop, x=continent)) +
+geom_col()
 ```
 
 -   **Your turn:** Recreate the following plot, which is commonly referred to as a **lollipop plot**. Hint: Start with the points, then try adding the `segment`s, then add axis labels and `caption`, and finally, as a stretch goal, update the x scale (which will require a function we haven't introduced in lectures or labs yet!).
@@ -120,9 +138,15 @@ Add your response here.
 #| label: population-summary-lollipop
 #| fig-asp: 0.4
 
-# add code here
+ggplot(population_summary, aes(x= tot_pop, y=continent))+
+  geom_point()+
+  geom_segment(aes(x=0, xend= tot_pop, y=continent, yend=continent))+
+  theme_minimal()+
+  labs(title= "World Population", subtitle="As of 2022", x ="Total population", y= "Continent", caption= "Data sources: The World Bank and Our World in Data")+
+  scale_x_continuous(breaks= c(0e+00,1e+06,2e+06,3e+06,4e+06), label= c("0 bil","1 bil", "2 bil", "3 bil", "4 bil"))
 ```
 
 -   **Think out loud:** What additional improvements would you like to make to this plot.
-
-Add your response here.
+    -   Organize in continents increasing population size.
+    -   Give some colour to the graph.
+    -   more specificity in x axis.
