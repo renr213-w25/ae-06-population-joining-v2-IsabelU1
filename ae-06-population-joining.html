@@ -294,7 +294,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p><img src="https://sta199-s24.github.io/images/population-summary-lollipop.png" class="img-fluid"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(population_summary, <span class="fu">aes</span>(<span class="at">x=</span> tot_pop, <span class="at">y=</span>continent))<span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>, <span class="at">xend=</span> tot_pop, <span class="at">y=</span>continent, <span class="at">yend=</span>continent))<span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span> <span class="st">"World Population"</span>, <span class="at">subtitle=</span><span class="st">"As of 2022"</span>, <span class="at">x =</span><span class="st">"Total population"</span>, <span class="at">y=</span> <span class="st">"Continent"</span>, <span class="at">caption=</span> <span class="st">"Data sources: The World Bank and Our World in Data"</span>)<span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">c</span>(<span class="fl">0e+00</span>,<span class="fl">1e+06</span>,<span class="fl">2e+06</span>,<span class="fl">3e+06</span>,<span class="fl">4e+06</span>), <span class="at">label=</span> <span class="fu">c</span>(<span class="st">"0 bil"</span>,<span class="st">"1 bil"</span>, <span class="st">"2 bil"</span>, <span class="st">"3 bil"</span>, <span class="st">"4 bil"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ae-06-population-joining_files/figure-html/population-summary-lollipop-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <ul>
 <li><strong>Think out loud:</strong> What additional improvements would you like to make to this plot.</li>

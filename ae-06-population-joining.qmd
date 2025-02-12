@@ -138,7 +138,16 @@ geom_col()
 #| label: population-summary-lollipop
 #| fig-asp: 0.4
 
-# add code here
+ggplot(population_summary, aes(x= tot_pop, y=continent))+
+  geom_point()+
+  geom_segment(aes(x=0, xend= tot_pop, y=continent, yend=continent))+
+  theme_minimal()+
+  labs(title= "World Population", subtitle="As of 2022", x ="Total population", y= "Continent", caption= "Data sources: The World Bank and Our World in Data")+
+  scale_x_continuous(breaks= c(0e+00,1e+06,2e+06,3e+06,4e+06), label= c("0 bil","1 bil", "2 bil", "3 bil", "4 bil"))
+
+
+
+
 ```
 
 -   **Think out loud:** What additional improvements would you like to make to this plot.
